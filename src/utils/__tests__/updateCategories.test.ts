@@ -2,10 +2,7 @@ import { Category } from '../../types';
 import { updateCategories } from '../updateCategories';
 
 describe('test updateCategories function', () => {
-    let categories: Category[];
-    beforeAll(() => {
-        categories = ['Для дома', 'Одежда', 'Электроника'];
-    });
+    const categories: Category[] = ['Для дома', 'Одежда', 'Электроника'];
 
     it('return categories without changed category', () => {
         expect(updateCategories(categories, 'Для дома')).toEqual([

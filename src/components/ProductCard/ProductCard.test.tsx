@@ -5,18 +5,16 @@ import { ProductCard } from './ProductCard';
 import { Product } from '../../types';
 import { getPrice } from '../../utils';
 
-jest.mock('../../utils/getPrice', () => {
-    return {
-        __esModule: true,
-        getPrice: jest.fn(() => '300 $'),
-    };
-});
+jest.mock('../../utils/getPrice', () => ({
+    __esModule: true,
+    getPrice: jest.fn(() => '300 $'),
+}));
 
 afterEach(jest.clearAllMocks);
 
 describe('ProductCard test', () => {
     let product: Product;
-    beforeAll(() => {
+    beforeEach(() => {
         product = {
             id: 1,
             name: 'Easy',
@@ -24,13 +22,22 @@ describe('ProductCard test', () => {
             price: 300,
             priceSymbol: '$',
             category: 'Для дома',
+            imgUrl: '/iphone.png',
         };
     });
 
-    it('should render correctly', () => {
+    it('should render correctly with img', () => {
         const rendered = render(<ProductCard {...product} />);
 
         expect(rendered.asFragment()).toMatchSnapshot();
+        expect(rendered.baseElement.querySelector('.product-card__image')).toBeDefined();
+    });
+
+    it('should render correctly without img', () => {
+        product.imgUrl = '';
+        const rendered = render(<ProductCard {...product} />);
+
+        expect(rendered.baseElement.querySelector('.product-card__image')).toBeNull();
     });
 
     it('getPrice called once', () => {

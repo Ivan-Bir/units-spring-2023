@@ -35,38 +35,30 @@ const products: Product[] = [
 
 afterEach(jest.clearAllMocks);
 
-jest.useFakeTimers().setSystemTime(new Date(2023, 0, 0, 0, 0, 0, 0));
+jest.useFakeTimers().setSystemTime(new Date('01-01-2023'));
 
-jest.mock('../../hooks/useProducts', () => {
-    return {
-        __esModule: true,
-        useProducts: jest.fn(() => products),
-    };
-});
+jest.mock('../../hooks/useProducts', () => ({
+    __esModule: true,
+    useProducts: jest.fn(() => products),
+}));
 
-jest.mock('../../utils/getNextSortBy', () => {
-    return {
-        __esModule: true,
-        getNextSortBy: jest.fn(() => 'по возрастанию цены'),
-    };
-});
+jest.mock('../../utils/getNextSortBy', () => ({
+    __esModule: true,
+    getNextSortBy: jest.fn(() => 'по возрастанию цены'),
+}));
 
-jest.mock('../../utils/getPrice', () => {
-    return {
-        __esModule: true,
-        getPrice: jest.fn(
-            (value: number, symbol: PriceSymbol = '₽'): string =>
-                `${value.toLocaleString('ru-RU')} ${symbol}`
-        ),
-    };
-});
+jest.mock('../../utils/getPrice', () => ({
+    __esModule: true,
+    getPrice: jest.fn(
+        (value: number, symbol: PriceSymbol = '₽'): string =>
+            `${value.toLocaleString('ru-RU')} ${symbol}`
+    ),
+}));
 
-jest.mock('../../utils/updateCategories', () => {
-    return {
-        __esModule: true,
-        updateCategories: jest.fn(() => []),
-    };
-});
+jest.mock('../../utils/updateCategories', () => ({
+    __esModule: true,
+    updateCategories: jest.fn(() => []),
+}));
 
 describe('MainPage test', () => {
     let rendered: RenderResult;
@@ -89,6 +81,10 @@ describe('MainPage test', () => {
         const category = rendered
             .getAllByText('Электроника')
             .find((elem) => elem.classList.contains('categories__badge'));
+
+        expect(category).toBeDefined();
+        expect(category?.innerHTML).toEqual('Электроника');
+
         if (!category) {
             return;
         }

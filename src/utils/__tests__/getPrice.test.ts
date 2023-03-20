@@ -8,4 +8,8 @@ describe('test get price function', () => {
     it('should return value with dollar symbol', () => {
         expect(getPrice(325, '$')).toBe('325 $');
     });
+
+    it('should return value with unknown symbol', () => {
+        expect(getPrice(0)).toBe('0 ₽');
+    });
 });

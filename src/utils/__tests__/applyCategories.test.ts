@@ -2,9 +2,9 @@ import { Product } from '../../types';
 import { applyCategories } from '../applyCategories';
 
 describe('test applyCategories function', () => {
-    let product: Product[];
+    let products: Product[];
     beforeAll(() => {
-        product = [
+        products = [
             {
                 id: 1,
                 name: 'string',
@@ -33,10 +33,18 @@ describe('test applyCategories function', () => {
     });
 
     it('should return products if categories empty', () => {
-        expect(applyCategories(product, [])).toEqual(product);
+        expect(applyCategories(products, [])).toEqual(products);
     });
 
     it('should return products applied categories', () => {
-        expect(applyCategories(product, ['Одежда'])).toEqual([product[2]]);
+        expect(applyCategories(products, ['Одежда'])).toEqual([products[2]]);
+    });
+
+    it('should return products for all categories', () => {
+        expect(applyCategories(products, ['Для дома', 'Электроника', 'Одежда'])).toEqual([...products]);
+    });
+
+    it('should return products applied multiple categories', () => {
+        expect(applyCategories(products, ['Одежда', 'Для дома'])).toEqual([products[1], products[2]]);
     });
 });
