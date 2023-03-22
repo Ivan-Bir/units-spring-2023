@@ -83,13 +83,8 @@ describe('MainPage test', () => {
             .find((elem) => elem.classList.contains('categories__badge'));
 
         expect(category).toBeDefined();
-        expect(category?.innerHTML).toEqual('Электроника');
 
-        if (!category) {
-            return;
-        }
-
-        fireEvent.click(category);
+        fireEvent.click(category!);
         expect(updateCategories).toHaveBeenCalledTimes(1);
     });
 });

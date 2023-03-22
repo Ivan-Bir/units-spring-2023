@@ -3,7 +3,7 @@ import { applyCategories } from '../applyCategories';
 
 describe('test applyCategories function', () => {
     let products: Product[];
-    beforeAll(() => {
+    beforeEach(() => {
         products = [
             {
                 id: 1,

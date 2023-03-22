@@ -34,8 +34,12 @@ describe('ProductCard test', () => {
     });
 
     it('should render correctly without img', () => {
-        product.imgUrl = '';
-        const rendered = render(<ProductCard {...product} />);
+        const productPropsWithoutImgUrl: Product = {
+            ...product,
+        };
+        delete productPropsWithoutImgUrl.imgUrl;
+
+        const rendered = render(<ProductCard {...productPropsWithoutImgUrl} />);
 
         expect(rendered.baseElement.querySelector('.product-card__image')).toBeNull();
     });
